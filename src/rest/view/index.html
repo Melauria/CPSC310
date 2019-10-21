@@ -1,0 +1,285 @@
+<html>
+<head>
+    <title>Project D4</title>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+    <!--<script src="./public/main.js"></script>-->
+
+    <style type="text/css">
+
+        /*h1 {
+            font-family: monospace;
+        }*/
+        .heading {
+            font-family: sans-serif;
+        }
+
+        #heading1 {
+            color: blue;
+        }
+
+        div {
+            font-family: sans-serif;
+        }
+
+        textarea {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            width: 500px;
+        }
+
+        #Add, #Remove, #Query, #Result, #C, #R, #S, #courseResult, #roomsResult, #scheduleResult, #bldMap,
+        #courseResults, #roomsResults, #scheduleResults {
+            width: 80%;
+            margin: auto;
+            margin-top: 10px;
+            border-style: solid;
+            padding: 10px;
+        }
+
+        #map {
+            height: 80%;
+            width: 100%;
+        }
+
+        .btn {
+            text-align: center;
+        }
+
+        #btnSubmit, #btnCourses, #btnRooms, #btnSchedule,
+        #queryReset, #courseReset, #roomReset, #scheduleReset, #mapReset {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+<div>
+    <h1 id="heading1" class="heading" align="center">UBCInsight</h1>
+</div>
+
+<div id="Navigator" class="btn">
+    <button type="button" id="manage_dataset">Manage Dataset</button>
+    <button type="button" id="course_explorer">Course Explorer</button>
+    <button type="button" id="room_explorer">Room Explorer</button>
+    <button type="button" id="scheduling">Room Scheduling</button>
+</div>
+
+<div id="manage">
+    <h2 id="heading2" class="heading" align="center">Manage Dataset</h2>
+    <div id="Add">
+        <h3>Add Dataset</h3>
+        <input type="file" name="fileUpload" id="fileUpload"/>
+        <button id="AddDataset">Add Dataset</button>
+    </div>
+
+    <div id="Remove">
+        <h3>Remove Dataset</h3>
+        <input type="radio" name="remove" value="courses"> Courses
+        <input type="radio" name="remove" value="rooms"> Rooms <br>
+        <button id="RemoveDataset">Remove Dataset</button>
+    </div>
+
+
+    <div id="Query">
+        <h3>Perform Query</h3>
+        <textarea id="txtQuery"></textarea><br/>
+        <button id="btnSubmit" class="button">Submit</button>
+        <button type="reset" value="Reset" id="queryReset">Reset</button>
+    </div>
+
+
+    <div id="Result">
+        <h3>Result</h3>
+        <table id="tblResults"></table>
+    </div>
+</div>
+
+<div id="courses_nav">
+    <h2 id="heading3" class="heading" align="center">Course Explorer</h2>
+    <form id="searchCourses">
+        <div class="formGroup" id="C">
+
+            <div>
+                <h4 for="courseSize">Section Size:</h4>
+                <input type="radio" class="myCheckbox" name="filter" value="gt"> Greater Than
+                <input type="radio" class="myCheckbox" name="filter" value="lt"> Less Than
+                <input type="radio" class="myCheckbox" name="filter" value="eq"> Equal To <br>
+                <input type="text" class="form-control" id="courses_sectionSize">
+            </div>
+
+            <div>
+                <h4 for="courseDepartment">Department:</h4>
+                <input type="text" class="form-control" id="courses_dept">
+            </div>
+
+            <div>
+                <h4 for="courseNumber">Course Number:</h4>
+                <input type="text" class="form-control" id="courses_id">
+            </div>
+
+            <div>
+                <h4 for="courseInstructor">Instructor:</h4>
+                <input type="text" class="form-control" id="courses_instructor">
+            </div>
+
+            <div>
+                <h4 for="courseTitle">Title:</h4>
+                <input type="text" class="form-control" id="courses_title">
+            </div>
+
+            <div>
+                <h4 for="courseTitle">Group By courses_dept and courses_id?</h4>
+                <input type="radio" name="group" value="yes"> Yes
+                <input type="radio" name="group" value="no"> No <br>
+            </div>
+
+            <div>
+                <h4 for="courseTitle">Sort By:</h4>
+                <input type="radio" name="sort" value="highAvg"> Highest Average
+                <input type="checkbox" name="sort" value="courses_pass"> Most Passing
+                <input type="checkbox" name="sort" value="courses_fail"> Most Failing <br>
+                OR <br>
+                <input type="radio" name="sort" value="lowAvg"> Lowest Average <br>
+                <!--<input type="checkbox" name="sort" value="section"> Most Sections-->
+
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary" id="btnCourses">Search</button>
+                <button type="reset" value="Reset" id="courseReset">Reset</button>
+            </div>
+
+        </div>
+
+        <div id="courseResult">
+            <h3>Result</h3>
+            <table id="courseResults"></table>
+        </div>
+
+    </form>
+</div>
+
+<div id="rooms_nav">
+    <h2 id="heading4" class="heading" align="center">Room Explorer</h2>
+    <form id="searchRooms">
+        <div class="formGroup" id="R">
+            <div>
+                <h4>Building Name:</h4>
+                <input type="text" class="form-control" id="rooms_shortname">
+            </div>
+
+            <div>
+                <h4>Room Number:</h4>
+                <input type="text" class="form-control" id="rooms_number">
+            </div>
+
+            <div>
+                <h4>Room Size:</h4>
+                <input type="text" class="form-control" id="rooms_seats">
+            </div>
+
+            <div>
+                <h4>Room Type:</h4>
+                <input type="text" class="form-control" id="rooms_type">
+            </div>
+
+            <div>
+                <h4>Furniture Type:</h4>
+                <input type="text" class="form-control" id="rooms_furniture">
+            </div>
+
+            <div>
+                <h4>Location (distance from a given building):</h4>
+                <input type="text" class="form-control" id="rooms_location">
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary" id="btnRooms">Search</button>
+                <button type="reset" value="Reset" id="mapReset" onclick="deleteMarkers();">Reset</button>
+            </div>
+
+        </div>
+
+        <div id="roomsResult">
+            <h3>Result</h3>
+            <table id="roomsResults"></table>
+        </div>
+
+        <div id="bldMap">
+            <h3>Map</h3>
+            <div id="map"></div>
+        </div>
+
+        <script>
+            var map;
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: 49.26500, lng: -123.255400},
+                    zoom: 15
+                });
+                InfoWindow = new google.maps.InfoWindow();
+            }
+        </script>
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUhxg8_1tR1flB9nL9GjnlX0ghm4Ho5O8&libraries=geometry&callback=initMap">
+
+        </script>
+
+    </form>
+</div>
+
+<div id="scheduling_nav">
+    <h2 id="heading5" class="heading" align="center">Room Scheduling</h2>
+    <form id="searchSection">
+        <div class="formGroup" id="S">
+            <div>
+                <h4 for="courseSize">Course Department:</h4>
+                <input type="text" class="form-control" id="schedule_dept">
+            </div>
+
+            <div>
+                <h4 for="courseDepartment">Course Number:</h4>
+                <input type="text" class="form-control" id="schedule_id">
+            </div>
+
+            <div>
+                <h4 for="courseNumber">Building Name:</h4>
+                <input type="text" class="form-control" id="schedule_bldName">
+            </div>
+
+            <div>
+                <h4 for="courseInstructor">Distance:</h4>
+                <input type="text" class="form-control" id="schedule_distance">
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary" id="btnSchedule">Search</button>
+                <button type="reset" value="Reset" id="scheduleReset">Reset</button>
+            </div>
+
+        </div>
+
+        <div id="scheduleResult">
+            <h4>quality is: </h4>
+            <table id = "quality" align="center"> </table>
+            <h3>Result</h3>
+            <table id="scheduleResults"></table>
+        </div>
+
+    </form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="./public/main.js"></script>
+
+
+
+</body>
+</html>
