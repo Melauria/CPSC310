@@ -390,6 +390,10 @@ export default class InsightFacade implements IInsightFacade {
             fs.exists(path, function (exists: any) {
                 if (exists) {
                     fs.unlink(path);
+<<<<<<< HEAD
+                    //TODO: check!!!不知道对不对
+=======
+>>>>>>> 13415e254bb5a7561255ab32c4ce09cbe4615a2f
                     if (id === "courses") {
                         coursedata1 = [];
                     } else if (id === "rooms") {
